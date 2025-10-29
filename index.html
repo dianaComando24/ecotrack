@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoTrack – Tu Huella Verde</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .pantalla { display: none; }
+    .pantalla.activa { display: block; }
+  </style>
+</head>
+<body class="bg-green-50 text-gray-800">
+
+  <!-- Pantalla: Bienvenida -->
+  <section id="bienvenida" class="pantalla activa min-h-screen flex flex-col items-center justify-center text-center p-6">
+    <h1 class="text-4xl font-bold mb-2">EcoTrack – Tu Huella Verde</h1>
+    <p class="mb-4 text-lg">Empieza a cuidar el planeta, una acción a la vez.</p>
+    <img src="eco-image.png" alt="Ilustración ecológica" class="w-32 mb-4">
+    <div class="space-x-4">
+      <button onclick="mostrar('login')" class="bg-green-500 text-white px-4 py-2 rounded">Iniciar sesión</button>
+      <button onclick="mostrar('login')" class="bg-green-700 text-white px-4 py-2 rounded">Registrarse</button>
+    </div>
+    <footer class="mt-6 text-sm text-gray-600">v1.0 diseño académico</footer>
+  </section>
+
+  <!-- Pantalla: Login -->
+  <section id="login" class="pantalla min-h-screen flex flex-col items-center justify-center p-6">
+    <h2 class="text-2xl font-semibold mb-4">Accede a tu cuenta</h2>
+    <input id="correo" type="email" placeholder="Correo electrónico" class="border p-2 mb-2 w-64">
+    <input id="clave" type="password" placeholder="Contraseña" class="border p-2 mb-2 w-64">
+    <button onclick="iniciarSesion()" class="bg-green-600 text-white px-4 py-2 rounded mb-2">Entrar</button>
+    <a href="#" class="text-blue-500 text-sm mb-2">¿Olvidaste tu contraseña?</a>
+    <button class="bg-red-500 text-white px-4 py-2 rounded">Ingresar con Google</button>
+    <button onclick="mostrar('bienvenida')" class="mt-6 text-green-700 underline">← Volver</button>
+  </section>
+  <!-- Pantalla: Revisión de Datos -->
+<section id="revisarDatos" class="pantalla min-h-screen p-6 text-center">
+  <h2 class="text-2xl font-bold mb-4">Revisión de tus datos 🌿</h2>
+  <p class="mb-2">Nombre de usuario: <strong id="datoNombre">---</strong></p>
+  <p class="mb-2">Correo electrónico: <strong id="datoCorreo">---</strong></p>
+  <p class="mb-2">Nivel ecológico: <strong id="datoNivel">---</strong></p>
+  <button onclick="mostrar('dashboard')" class="mt-6 bg-green-600 text-white px-4 py-2 rounded">Ir al Dashboard</button>
+  <button onclick="mostrar('login')" class="mt-4 text-green-700 underline">← Volver</button>
+</section>
+
+  <!-- Pantalla: Dashboard -->
+  <section id="dashboard" class="pantalla min-h-screen p-6">
+    <h2 class="text-2xl font-bold mb-2">Hola, <span id="nombreUsuario">Usuario</span> 👋</h2>
+    <p class="mb-4 text-lg">Tienes <span id="ecoTotal">0</span> EcoPuntos esta semana 🌿</p>
+    <div class="bg-green-200 h-4 w-full rounded mb-6">
+      <div id="barraProgreso" class="bg-green-600 h-4 w-1/2 rounded"></div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <button onclick="mostrar('acciones')" class="bg-white border p-4 rounded shadow">Registrar acción</button>
+      <button onclick="mostrar('estadisticas')" class="bg-white border p-4 rounded shadow">Estadísticas</button>
+      <button onclick="mostrar('consejos')" class="bg-white border p-4 rounded shadow">Consejos</button>
+      <button onclick="mostrar('perfil')" class="bg-white border p-4 rounded shadow">Perfil</button>
+    </div>
+    <img src="planet-icon.png" alt="Ícono decorativo" class="w-16 mx-auto">
+    <button onclick="cerrarSesion()" class="mt-6 text-red-600 underline">Cerrar sesión</button>
+  </section>
+
+  <!-- Pantalla: Registro de Acciones -->
+  <section id="acciones" class="pantalla min-h-screen p-6">
+    <h2 class="text-2xl font-bold mb-4">Registrar acción ecológica ♻️</h2>
+    <form id="formAcciones" class="space-y-2">
+      <label><input type="checkbox" value="10"> Reciclé materiales (+10)</label><br>
+      <label><input type="checkbox" value="15"> Usé transporte público (+15)</label><br>
+      <label><input type="checkbox" value="5"> Llevé mi botella reutilizable (+5)</label><br>
+      <label><input type="checkbox" value="8"> Apagué luces innecesarias (+8)</label><br>
+      <label><input type="checkbox" value="12"> Reutilicé bolsas (+12)</label><br>
+      <label><input type="checkbox" value="20"> Planté un árbol (+20)</label>
+    </form>
+    <button onclick="guardarAcciones()" class="bg-green-600 text-white px-4 py-2 rounded mt-4">Guardar acciones</button>
+    <p id="mensajeAcciones" class="mt-4 text-green-700 font-semibold hidden">¡Acciones registradas con éxito! +<span id="ecoPuntosGanados">0</span> EcoPuntos añadidos.</p>
+    <button onclick="mostrar('dashboard')" class="mt-6 text-green-700 underline">← Volver</button>
+  </section>
+
+  <!-- Pantalla: Estadísticas -->
+  <section id="estadisticas" class="pantalla min-h-screen p-6">
+    <h2 class="text-2xl font-bold mb-4">Tu progreso ecológico</h2>
+    <div class="bg-white p-4 rounded shadow mb-4">
+      <p>Has evitado <strong>3 kg de CO₂</strong> este mes.</p>
+      <p>Has completado <strong>15 acciones sostenibles</strong>.</p>
+    </div>
+    <div class="bg-green-200 h-4 w-full rounded mb-4">
+      <div class="bg-green-600 h-4 w-3/4 rounded"></div>
+    </div>
+    <p class="text-yellow-600 text-lg">🥇 Explorador Verde – Primer semana completada.</p>
+    <button onclick="mostrar('dashboard')" class="mt-6 text-green-700 underline">← Volver</button>
+  </section>
+
+  <!-- Pantalla: Consejos -->
+  <section id="consejos" class="pantalla min-h-screen p-6">
+    <h2 class="text-2xl font-bold mb-4">Consejos para cuidar el planeta 🌍</h2>
+    <ul class="space-y-2">
+      <li>📄 Evita imprimir si no es necesario.</li>
+      <li>🛍️ Lleva tu propia bolsa al supermercado.</li>
+      <li>🚰 Prefiere botellas reutilizables.</li>
+      <li>🚗 Usa transporte compartido.</li>
+      <li>🔌 Desconecta tus dispositivos cuando no los uses.</li>
+    </ul>
+    <button onclick="mostrar('dashboard')" class="mt-6 text-green-700 underline">← Volver</button>
+  </section>
+
+  <!-- Pantalla: Perfil -->
+  <section id="perfil" class="pantalla min-h-screen p-6 text-center">
+    <img src="avatar.png" alt="Avatar del usuario" class="w-24 mx-auto rounded-full mb-4">
+    <h2 class="text-xl font-semibold" id="aliasPerfil">Sofía Martínez</h2>
+    <p class="mt-2 text-lg">Nivel ecológico: <span id="nivelEcologico">🌱 Aprendiz Verde</span></p>
+    <div class="mt-4 space-y-1 text-left max-w-md mx-auto">
+      <p>0–100: Aprendiz Verde</p>
+      <p>101–300: Explorador Verde</p>
+      <p>301–600: Guardián del Planeta</p>
+      <p>601+: Héroe Ambiental</p>
+    </div>
+    <button onclick="mostrar('dashboard')" class="mt-6 text-green-700 underline">← Volver</button>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+  <!-- Script de sesión y navegación -->
+  <script>
+    function mostrar(id) {
+      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+      document.getElementById(id).classList.add('activa');
+    }
+
+    function iniciarSesion() {
+      const correo = document.getElementById('correo').value;
+      const clave = document.getElementById('clave').value;
+      if (correo && clave) {
+        const nombre = correo.split('@')[0];
+        localStorage.setItem('usuario', correo);
+        localStorage.setItem('ecoPuntos', '0');
+
+        document.getElementById('datoNombre').textContent = nombre;
+        document.getElementById('datoCorreo').textContent = correo;
+        document.getElementById('datoNivel').textContent = '🌱 Aprendiz Verde';
+
+        document.getElementById('nombreUsuario').textContent = nombre;
+        document.getElementById('aliasPerfil').textContent = nombre;
+        document.getElementById('ecoTotal').textContent = '0';
+        actualizarNivel(0);
+        mostrar('revisarDatos');
+      } else {
+        alert('Por favor ingresa correo y contraseña.');
+      }
+    }
+
+    function cerrarSesion() {
+      localStorage.removeItem('usuario');
+      localStorage.removeItem('ecoPuntos');
+      mostrar('bienvenida');
+    }
+
+    function guardarAcciones() {
+      const checkboxes = document.querySelectorAll('#formAcciones input[type="checkbox"]:checked');
+      let puntos = 0;
+      checkboxes.forEach(cb => puntos += parseInt(cb.value));
+      let total = parseInt(localStorage.getItem('ecoPuntos') || '0') + puntos;
+      localStorage.setItem('ecoPuntos', total);
+      document.getElementById('ecoPuntosGanados').textContent = puntos;
+      document.getElementById('mensajeAcciones').classList.remove('hidden');
+      document.getElementById('ecoTotal').textContent = total;
+      document.getElementById('barraProgreso').style.width = Math.min(total / 6, 100) + '%';
+      actualizarNivel(total);
+    }
+
+    function actualizarNivel(puntos) {
+      let nivel = '';
+      if (puntos <= 100) nivel = '🌱 Aprendiz Verde';
+      else if (puntos <= 300) nivel = '🥇 Explorador Verde';
+      else if (puntos <= 600) nivel = '🛡️ Guardián del Planeta';
+      else nivel = '🦸‍♀️ Héroe Ambiental';
+      document.getElementById('nivelEcologico').textContent = nivel;
+      document.getElementById('datoNivel').textContent = nivel;
+    }
+
+    window.onload = () => {
+      const usuario = localStorage.getItem('usuario');
+      const puntos = parseInt(localStorage.getItem('ecoPuntos') || '0');
+      if (usuario) {
+        const nombre = usuario.split('@')[0];
+        document.getElementById('nombreUsuario').textContent = nombre;
+        document.getElementById('aliasPerfil').textContent = nombre;
+        document.getElementById('ecoTotal').textContent = puntos;
+        document.getElementById('barraProgreso').style.width = Math.min(puntos / 6, 100) + '%';
+        actualizarNivel(puntos);
+
+        document.getElementById('datoNombre').textContent = nombre;
+        document.getElementById('datoCorreo').textContent = usuario;
+        document.getElementById('datoNivel').textContent = document.getElementById('nivelEcologico').textContent;
+
+        mostrar('revisarDatos');
+      }
+    };
+  </script>
+
+</body>
+</html>
